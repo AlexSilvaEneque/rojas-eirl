@@ -1,0 +1,101 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum TypeClient {
+  CORPORATE
+  INDIVIDUAL
+}
+
+model User {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  email String @unique
+  phone String? @default("")
+  address String? @default("")
+  password String
+  status Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  role Role @relation(fields: [roleId], references: [id])
+  roleId String @db.ObjectId
+
+  sales Sale[]
+}
+
+model Role {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  description String @unique
+  status Boolean @default(true)
+
+  users User[]
+}
+
+model Product {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  price_sale Float
+  price_purchase Float
+  stock Int
+  status Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  category Category @relation(fields: [categoryId], references: [id])
+  categoryId String @db.ObjectId
+
+  details Detail[]
+}
+
+model Category {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String @unique
+  status Boolean @default(true)
+
+  products Product[]
+}
+
+model Client {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  email String? @default("")
+  address String? @default("")
+  phone String? @default("")
+  type TypeClient
+  status Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Sale {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  date DateTime @default(now())
+  total Float
+  status Boolean @default(true)
+  statusSale Boolean @default(false)
+
+  user User @relation(fields: [userId], references: [id])
+  userId String @db.ObjectId
+
+  details Detail[]
+}
+
+model Detail {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  quantity Int
+  product Product @relation(fields: [productId], references: [id])
+  productId String @db.ObjectId
+
+  sale Sale @relation(fields: [saleId], references: [id])
+  saleId String @db.ObjectId
+}
+
