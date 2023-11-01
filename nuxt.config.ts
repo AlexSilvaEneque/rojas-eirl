@@ -2,6 +2,10 @@
 export default defineNuxtConfig({
   devtools: { enabled: false },
 
+  colorMode: {
+    preference: 'light'
+  },
+
   app: {
     head: {
       charset: 'utf-8',
@@ -10,10 +14,10 @@ export default defineNuxtConfig({
     }
   },
 
-  
   runtimeConfig: {
     jwt_secret: process.env.JWT_SECRET
   },
+
   modules: [
     '@pinia/nuxt',
     '@nuxt/ui'

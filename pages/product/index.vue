@@ -57,38 +57,66 @@
                 <Column header="Opciones" style="width: 15%">
                     <template #body="prop">
                         <div class="flex gap-x-1">
-                            <UButton
-                                icon="i-heroicons-eye"
-                                size="sm"
-                                color="sky"
-                                square
-                                variant="solid"
-                                @click="storeProduct.moreInfo(prop.data)"
-                            />
-                            <UButton v-if="store.user.role!.description === 'Administrador'"
-                                icon="i-heroicons-pencil-square"
-                                size="sm"
-                                color="primary"
-                                square
-                                variant="solid"
-                                @click="storeProduct.editItem(prop.data)"
-                            />
-                            <UButton v-if="prop.data.status && store.user.role!.description === 'Administrador'"
-                                icon="i-heroicons-trash"
-                                size="sm"
-                                color="red"
-                                square
-                                variant="solid"
-                                @click="storeProduct.deleteItem(prop.data)"
-                            />
-                            <UButton v-if="!prop.data.status"
-                                icon="i-heroicons-arrow-up-on-square-stack"
-                                size="sm"
-                                color="yellow"
-                                square
-                                variant="solid"
-                                @click="storeProduct.enableItem(prop.data)"
-                            />
+                            <UTooltip text="Ver más información">
+                                <UButton
+                                    icon="i-heroicons-eye"
+                                    size="sm"
+                                    color="sky"
+                                    square
+                                    variant="solid"
+                                    @click="storeProduct.moreInfo(prop.data)"
+                                />
+                            </UTooltip>
+
+                            <UTooltip text="Registrar nuevo ingreso del producto">
+                                <UButton
+                                    icon="i-heroicons-clipboard-document-list"
+                                    size="sm"
+                                    color="violet"
+                                    square
+                                    variant="solid"
+                                    @click="storeProduct.newEntry(prop.data)"
+                                />
+                            </UTooltip>
+
+                            <template v-if="store.user.role!.description === 'Administrador'">
+                                <UTooltip text="Editar información">
+                                    <UButton
+                                        icon="i-heroicons-pencil-square"
+                                        size="sm"
+                                        color="primary"
+                                        square
+                                        variant="solid"
+                                        @click="storeProduct.editItem(prop.data)"
+                                    />
+                                </UTooltip>
+                            </template>
+
+                            <template v-if="prop.data.status && store.user.role!.description === 'Administrador'">
+                                <UTooltip text="Eliminar">
+                                    <UButton
+                                        icon="i-heroicons-trash"
+                                        size="sm"
+                                        color="red"
+                                        square
+                                        variant="solid"
+                                        @click="storeProduct.deleteItem(prop.data)"
+                                    />
+                                </UTooltip>
+                            </template>
+
+                            <template v-if="!prop.data.status">
+                                <UTooltip text="Habilitar" >
+                                    <UButton
+                                        icon="i-heroicons-arrow-up-on-square-stack"
+                                        size="sm"
+                                        color="yellow"
+                                        square
+                                        variant="solid"
+                                        @click="storeProduct.enableItem(prop.data)"
+                                    />
+                                </UTooltip>
+                            </template>
                         </div>
                     </template>
                 </Column>
@@ -99,6 +127,8 @@
         <OthersProductCreate />
 
         <OthersProductInfo />
+
+        <OthersProductNewEntry />
 
         <OthersProductEdit />
 

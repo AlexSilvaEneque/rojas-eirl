@@ -13,6 +13,7 @@ export const useStoreProduct = defineStore('product', () => {
     const isOpenEdit = ref<boolean>(false)
     const isOpenDelete = ref<boolean>(false)
     const isOpenEnable = ref<boolean>(false)
+    const isOpenNewEntry = ref<boolean>(false)
 
     const filteredProducts = computed(() => {
         if (!q.value) { return products.value }
@@ -37,6 +38,37 @@ export const useStoreProduct = defineStore('product', () => {
     const moreInfo = async (product : Product) => {
         isOpenInfo.value = true
         await selectedProduct(product)
+    }
+
+    const newEntry = async (product: Product) => {
+        isOpenNewEntry.value = true
+        await selectedProduct(product)
+    }
+
+    const handlerSubmitNewEntry = async (sendData : CreateProduct) => {
+        if (Object.keys(sendData).length < 3) {
+            storeGlobalUI.showMsgFailed('Complete los campos obligatorios')
+            return
+        }
+        try {
+            const res = await $fetch<{message: string}>('/api/product/new/'+product.value?.id, {
+                method: 'PUT',
+                body: {
+                    name: sendData.name,
+                    stock: Number(sendData.stock),
+                    price_sale: Number(sendData.price_sale),
+                    price_purchase: Number(sendData.price_purchase),
+                    categoryId: sendData.categoryId
+                }
+            })
+            console.log(res.message)
+            isOpenNewEntry.value = false
+            storeGlobalUI.showMsgSuccess(res.message)
+            loadProducts()
+        } catch (error:any) {
+            console.log(error)
+            storeGlobalUI.showMsgFailed(error.statusMessage)
+        }
     }
 
     const handlerSubmitCreate = async (product : CreateProduct) => {
@@ -147,8 +179,11 @@ export const useStoreProduct = defineStore('product', () => {
         isOpenEdit,
         isOpenDelete,
         isOpenEnable,
+        isOpenNewEntry,
         filteredProducts,
         moreInfo,
+        newEntry,
+        handlerSubmitNewEntry,
         handlerSubmitCreate,
         editItem,
         handlerSubmitEdit,

@@ -1,10 +1,17 @@
-import { H3Event } from "h3";
-import { updateUser, userById } from "~/server/controllers/user"
-import { CreateUser, User } from "~/server/interfaces/user";
-import bcrypt from "bcrypt";
+import type { H3Event } from 'h3';
+import { updateUser, userById } from '~/server/controllers/user';
+import { CreateUser, User } from '~/server/interfaces/user';
+import bcrypt from 'bcrypt';
 
 export default defineEventHandler(async (event : H3Event) => {
-    const { id } = event.context.params!
+    const id: string = event.context.params!.id.split('/')[1]
+
+    if (!isValidObjectId(id)) {
+        throw createError({
+            statusCode: 400,
+            statusMessage: 'El ID no es válido'
+        })
+    }
 
     const user : User | null = await userById(id)
     if (!user) {
@@ -22,12 +29,12 @@ export default defineEventHandler(async (event : H3Event) => {
         })
     }
 
-    const { name, email, password, roleId, address, phone } = body
+    const { name, email, password, address, phone } = body
 
-    if (!name || !email || !password || !roleId) {
+    if (!name || !email) {
         throw createError({
             statusCode: 401,
-            message: 'Envie los campos obligatorios'
+            statusMessage: 'Envie los campos obligatorios'
         })
     }
     
@@ -35,19 +42,18 @@ export default defineEventHandler(async (event : H3Event) => {
 
     user.name = name
     user.email = email
-    user.address = address
     user.phone = phone
+    user.address = address
     user.password = hash
-    user.roleId = roleId
     
     try {
         await updateUser(user)
         return {
-            msg: 'Datos actualizados'
+            message: 'Datos del perfil actualizados'
         }
     } catch (error) {
         return {
-            msg: 'Error al actualizar'
+            statusMessage: 'Error al actualizar'
         }
     }
 })

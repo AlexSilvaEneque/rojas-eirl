@@ -1,5 +1,6 @@
 <script setup lang="ts">
     import { useStoreAuth } from "~/stores/auth";
+    import { useGlobalUI } from "~/stores/globalUI"
     import type { IFUser } from '../../interface/index';
 
     definePageMeta({
@@ -12,6 +13,7 @@
         message?: string
     }
 
+    const storeGlobalUI = useGlobalUI()
     const store = useStoreAuth()
     const user = ref<IFUser | any>()
     const password = ref<string>('')
@@ -19,29 +21,21 @@
 
     const handlerSubmit = async () => {
         try {
-            let res = await $fetch<{ msg: string }>('/api/user/'+user.value.id, {
+            let res = await $fetch<{ message: string }>('/api/user/profile/'+user.value.id, {
                 method: 'PUT',
                 body: {
                     ...user.value,
                     password: password.value
                 }
             })
-            toastSuccess.visible = true
-            toastSuccess.message = res.msg
-        } catch (error) {
+            storeGlobalUI.showMsgSuccess(res.message)
+        } catch (error:any) {
             console.log(error)
+            storeGlobalUI.showMsgFailed(error.statusMessage)
         } finally {
             password.value = ''
         }
     }
-
-    watch(() => toastSuccess.visible, () => {
-        if (toastSuccess.visible) {
-            setTimeout(() => {
-                toastSuccess.visible = false
-            }, 4000)
-        }
-    })
 
     onMounted(() => {
         user.value = store.user
@@ -50,8 +44,8 @@
 
 <template>
     <div class="w-full">
-        <UIAlertSuccess v-if="toastSuccess.visible">
-            {{ toastSuccess.message }}
+        <UIAlertSuccess v-if="storeGlobalUI.ToastSuccess.visible">
+            {{ storeGlobalUI.ToastSuccess.message }}
         </UIAlertSuccess>
 
         <h1 class="font-extrabold text-2xl mb-3 mt-6">Actualizar Perfil</h1>

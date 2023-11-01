@@ -55,6 +55,21 @@ export const updateProduct = (product: CreateProduct) => {
     })
 }
 
+export const newEntryProduct = (product: CreateProduct) => {
+    return prisma.product.update({
+        where: {
+            id: product.id
+        },
+        data: {
+            name: product.name,
+            stock: product.stock,
+            price_sale: product.price_sale,
+            price_purchase: product.price_purchase,
+            categoryId: product.categoryId
+        }
+    })
+}
+
 export const deleteProduct = (product: Product) => {
     return prisma.product.update({
         where:{
