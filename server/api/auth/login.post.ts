@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
         })
     }
 
-    if (await compare(password, user.password)) {
+    if (await compare(password, user.password!)) {
         const token = generateJWT(user.id)
         return { token }
     } else {
