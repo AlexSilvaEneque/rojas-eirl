@@ -1,7 +1,11 @@
-import { IUser } from "~/server/interfaces"
+// import { IUser } from "~/server/interfaces"
+
+import { User } from "~/server/interfaces/user"
+
 
 export const useStoreAuth = defineStore('auth', () => {
-    const user = ref<IUser>({
+    const user = ref<User>({
+        id: '',
         name: '',
         email: '',
         password: '',
