@@ -8,21 +8,15 @@
         layout: 'admin'
     })
 
-    interface Toast {
-        visible: boolean
-        message?: string
-    }
-
     const storeGlobalUI = useGlobalUI()
     const store = useStoreAuth()
     const user = ref<IFUser | any>()
     const password = ref<string>('')
-    const toastSuccess : Toast = reactive({ visible: false })
 
     const handlerSubmit = async () => {
         try {
             let res = await $fetch<{ message: string }>('/api/user/profile/'+user.value.id, {
-                method: 'PUT',
+                method: 'PATCH',
                 body: {
                     ...user.value,
                     password: password.value

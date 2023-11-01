@@ -1,13 +1,12 @@
 <script setup lang="ts">
   import { ref } from 'vue'
   import type { IFLogin } from '../interface/index';
-  
-  const toast = useToast()
 
   const state : Ref<IFLogin> = ref({
     email: '',
     password: ''
   })
+  const loading = ref<boolean>(false)
 
   interface errorResponse {
     isError?: boolean
@@ -35,6 +34,7 @@
 
     // TODO: login
     try {
+      loading.value = true
       const res = await $fetch('/api/auth/login', {
         method: 'POST',
         body: {
@@ -47,11 +47,15 @@
       errorsResponse.isError = false
       errorsResponse.isShow = true
       errorsResponse.message = 'Inicio de sesión exitoso'
+
       return navigateTo('/dashboard')  
     } catch (error:any) {
       errorsResponse.isError = true
       errorsResponse.isShow = true
       errorsResponse.message = error.statusMessage
+      
+    } finally {
+      loading.value = false
     }
     
   }
@@ -95,8 +99,8 @@
         />
         <span v-if="showErrors && !state.password" class="block text-red-700 border-l-4 border-l-red-700 pl-2 mt-2">La contrasña es obligatoria</span>
       </UFormGroup>
-      <UButton type="submit" color="indigo" >
-        Iniciar sesión
+      <UButton type="submit" color="indigo" :disabled="loading" >
+        {{ loading ? 'Cargando....' : 'Iniciar sesión'}}
       </UButton>
     </form>
     <UNotification id="" v-if="errorsResponse.isShow && errorsResponse.isError" :title="errorsResponse.message" class="absolute top-3 right-3 w-96 bg-red-500" color="red" :ui="{

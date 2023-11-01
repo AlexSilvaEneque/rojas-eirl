@@ -1,5 +1,3 @@
-// import { IUser } from "~/server/interfaces"
-
 import { User } from "~/server/interfaces/user"
 
 

@@ -37,14 +37,17 @@ export default defineEventHandler(async (event : H3Event) => {
             statusMessage: 'Envie los campos obligatorios'
         })
     }
+
+    if (password) {
+        let hash : string = await bcrypt.hash(password, 10)
+        user.password = hash    
+    }
     
-    let hash : string = await bcrypt.hash(password, 10)
 
     user.name = name
     user.email = email
     user.phone = phone
     user.address = address
-    user.password = hash
     
     try {
         await updateUser(user)
