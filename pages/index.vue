@@ -53,7 +53,7 @@
       console.log(error.statusMessage)
       errorsResponse.isError = true
       errorsResponse.isShow = true
-      errorsResponse.message = error.statusMessage
+      errorsResponse.message = 'Error en las credenciales'
       
     } finally {
       loading.value = false
