@@ -27,10 +27,11 @@ export default defineEventHandler(async (event) => {
     if (await compare(password, user.password!)) {
         const token = generateJWT(user.id)
         return { token }
-    } else {
+    }
+        // return { statusMessage: 'La contraseña es incorrecta' }
         throw createError({
             statusCode: 401,
             statusMessage: 'La contraseña es incorrecta'
         })
-    }
+    
 })
