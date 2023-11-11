@@ -24,30 +24,37 @@ export default defineEventHandler(async (event : H3Event) => {
 
     const { name, email, password, roleId, address, phone } = body
 
-    if (!name || !email || !password || !roleId) {
+    if (!name || !email || !roleId) {
         throw createError({
             statusCode: 401,
-            message: 'Envie los campos obligatorios'
+            statusMessage: 'Envie los campos obligatorios'
         })
     }
     
-    let hash : string = await bcrypt.hash(password, 10)
+    if (password && password.length < 6) {
+        throw createError({
+            statusCode: 401,
+            statusMessage: 'La contraseña es de mínimo 6 caracteres'
+        })
+    } else {
+        const hash : string = await bcrypt.hash(password, 10)
+        user.password = hash
+    }
 
     user.name = name
     user.email = email
     user.address = address
     user.phone = phone
-    user.password = hash
     user.roleId = roleId
     
     try {
         await updateUser(user)
         return {
-            msg: 'Datos actualizados'
+            message: 'Datos actualizados'
         }
     } catch (error) {
         return {
-            msg: 'Error al actualizar'
+            statusMessage: 'Error al actualizar'
         }
     }
 })

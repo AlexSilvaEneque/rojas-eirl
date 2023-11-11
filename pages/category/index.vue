@@ -42,6 +42,8 @@
                 :rowsPerPageOptions="[5,10,20]"
                 :value="storeCategory.filteredCategories"
                 class="p-datatable-sm width-detail-table1 mt-3"
+                paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+                currentPageReportTemplate="{first} de {last} de {totalRecords}"
             >
                 <Column field="name" header="Nombre" style="width: 20%" />
                 <Column header="Estado" style="width: 15%">

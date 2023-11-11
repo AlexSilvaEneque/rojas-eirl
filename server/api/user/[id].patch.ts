@@ -8,7 +8,7 @@ export default defineEventHandler(async (event : H3Event) => {
     if (!isValidObjectId(id)) {
         throw createError({
             statusCode: 400,
-            message: 'El ID no es válido'
+            statusMessage: 'El ID no es válido'
         })
     }
 
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event : H3Event) => {
     if (!user) {
         throw createError({
             statusCode: 404,
-            message: 'El usuario no existe'
+            statusMessage: 'El usuario no existe'
         })
     }
 
@@ -28,7 +28,7 @@ export default defineEventHandler(async (event : H3Event) => {
         }
     } catch (error) {
         return {
-            message: 'Error al habilitar'
+            statusMessage: 'Error al habilitar'
         }
     }
 })
