@@ -10,7 +10,7 @@
 
     const store = useStoreAuth()
     const storeGlobalUI = useGlobalUI()
-    const { filteredUsers, q, isOpen, moreInfo, editItem, deleteItem, enableItem } = useUsers()
+    const { filteredUsers, q, isOpen, moreInfo, editItem, deleteItem, enableItem, loading } = useUsers()
     
 </script>
 
@@ -45,12 +45,15 @@
                 class="p-datatable-sm width-detail-table1 mt-3"
                 paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
                 currentPageReportTemplate="{first} de {last} de {totalRecords}"
+                :loading="loading"
             >
                 <template #empty>
                     <div class="w-full text-center">
                         No hay registros
                     </div>
                 </template>
+
+                <template #loading> Cargando los registros </template>
 
                 <Column field="name" header="Nombre" style="width: 20%" />
                 <Column header="Rol" style="width: 20%" >

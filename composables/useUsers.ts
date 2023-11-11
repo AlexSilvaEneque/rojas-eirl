@@ -12,6 +12,7 @@ export default function useUsers () {
     const isOpenEdit = useState<boolean>(() => false)
     const isOpenDelete = useState<boolean>(() => false)
     const isOpenEnable = useState<boolean>(() => false)
+    const loading = useState<boolean>(() => false)
 
     const filteredUsers = computed(() => {
         if (!q.value) { return users.value }
@@ -24,8 +25,10 @@ export default function useUsers () {
     })
 
     const loadUsers = async () => {
+        loading.value = true
         const res: UserAll[] = await $fetch('/api/user/user')
         users.value = res
+        loading.value = false
     }
 
     const selectedUser = async (param: User) => {
@@ -141,6 +144,7 @@ export default function useUsers () {
     })
 
     return {
+        loading,
         users,
         user,
         q,
