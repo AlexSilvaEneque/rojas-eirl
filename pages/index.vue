@@ -50,6 +50,7 @@
 
       return navigateTo('/dashboard')  
     } catch (error:any) {
+      console.log(error.statusMessage)
       errorsResponse.isError = true
       errorsResponse.isShow = true
       errorsResponse.message = error.statusMessage
