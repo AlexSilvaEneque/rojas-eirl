@@ -55,7 +55,8 @@ export default defineNuxtConfig({
   ],
   build: {
     transpile: [
-      "primevue"
+      "primevue",
+      "chart.js"
     ]
   }
 })
