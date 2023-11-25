@@ -22,3 +22,9 @@ export interface CreateUser {
     password: string
     roleId: string
 }
+
+export interface UserEnable {
+    id: string
+    name: string
+    status?: true
+}

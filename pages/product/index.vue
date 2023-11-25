@@ -11,6 +11,10 @@
     const store = useStoreAuth()
     const storeGlobalUI = useGlobalUI()
     const storeProduct = useStoreProduct()
+
+    onMounted(async () => {
+        await storeProduct.loadProducts()
+    })
 </script>
 
 <template>
@@ -46,7 +50,11 @@
                 currentPageReportTemplate="{first} de {last} de {totalRecords}"
             >
                 <Column field="name" header="Nombre" style="width: 20%" />
-                <Column field="price_sale" header="Precio venta" style="width: 20%" />
+                <Column header="Precio venta" style="width: 20%">
+                    <template #body="prop">
+                        {{ formatCurrency(prop.data.price_sale) }}
+                    </template>
+                </Column>
                 <Column field="stock" header="Stock" style="width: 20%" />
                 <Column header="Estado" style="width: 15%">
                     <template #body="prop">

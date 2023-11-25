@@ -1,4 +1,4 @@
-import { CreateProduct, Product } from "~/interface/product"
+import { CreateProduct, Product, ProductEnables } from "~/interface/product"
 import { useGlobalUI } from "~/stores/globalUI"
 
 export const useStoreProduct = defineStore('product', () => {
@@ -6,6 +6,7 @@ export const useStoreProduct = defineStore('product', () => {
     const storeGlobalUI = useGlobalUI()
     const products = ref<Product[]>([])
     const product = ref<Product | null>()
+    const productEnables = ref<ProductEnables[]>([])
     const q = ref<string>('')
 
     const isOpen = ref<boolean>(false)
@@ -24,6 +25,11 @@ export const useStoreProduct = defineStore('product', () => {
             })
         })
     })
+
+    const loadProductsEnables = async () => {
+        const res : Product[] = await $fetch('/api/product/enables')
+        productEnables.value = res
+    }
 
     const loadProducts = async () => {
         const res : Product[] = await $fetch('/api/product/products')
@@ -166,12 +172,13 @@ export const useStoreProduct = defineStore('product', () => {
         }
     })
 
-    onMounted(() => {
-        loadProducts()
+    onMounted(async () => {
+        await loadProducts()
     })
 
     return {
         products,
+        productEnables,
         product,
         q,
         isOpen,
@@ -181,6 +188,8 @@ export const useStoreProduct = defineStore('product', () => {
         isOpenEnable,
         isOpenNewEntry,
         filteredProducts,
+        loadProducts,
+        loadProductsEnables,
         moreInfo,
         newEntry,
         handlerSubmitNewEntry,

@@ -13,23 +13,33 @@
     "@nuxt/devtools": "latest",
     "@nuxt/ui": "^2.8.0",
     "@nuxtjs/tailwindcss": "^6.8.0",
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
     "@types/bcrypt": "^5.0.0",
+    "@types/chart.js": "^2.9.41",
     "@types/jsonwebtoken": "^9.0.2",
+    "@vite-pwa/nuxt": "^0.3.0",
     "nuxt": "^3.7.1",
     "prisma": "^5.4.1"
   },
   "dependencies": {
-    "@pinia/nuxt": "^0.4.11",
+    "@coreui/vue-chartjs": "^2.2.0",
+    "@pinia/nuxt": "^0.5.1",
+    "@popperjs/core": "^2.11.8",
     "@prisma/client": "^5.4.1",
+    "@vuepic/vue-datepicker": "^7.2.2",
     "bcrypt": "^5.1.1",
+    "chart.js": "^3.9.1",
+    "date-fns": "^2.30.0",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^3.1.2",
     "nuxt-highcharts": "^3.1.1",
     "pinia": "^2.1.6",
     "primeicons": "^6.0.1",
     "primevue": "^3.34.0",
-    "valibot": "^0.13.1",
+    "v-calendar": "^3.1.2",
     "vue-chart-3": "^3.1.8",
-    "vue-toast-notification": "^3.1.1"
+    "vue-tailwind-datepicker": "^1.6.1",
+    "vue-toast-notification": "^3.1.1",
+    "zod": "^3.22.4"
   }
 }

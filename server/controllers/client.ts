@@ -26,6 +26,18 @@ export const registerClient = (client : CreateClient) => {
     })
 }
 
+export const getClientsEnables = () => {
+    return prisma.client.findMany({
+        where: {
+            status: true
+        },
+        select: {
+            id: true,
+            name: true
+        }
+    })
+}
+
 export const updateClient = (client : CreateClient) => {
     return prisma.client.update({
         where: {

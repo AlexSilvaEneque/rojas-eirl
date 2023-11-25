@@ -20,18 +20,42 @@ export default defineNuxtConfig({
 
   modules: [
     '@pinia/nuxt',
-    '@nuxt/ui'
+    '@nuxt/ui',
+    '@pinia-plugin-persistedstate/nuxt',
+    '@vite-pwa/nuxt'
   ],
   pinia: {
     autoImports: [
       'defineStore'
     ]
   },
+  pwa: {
+    manifest: {
+      name: 'Mueblería Rojas',
+      short_name: 'SCI MR',
+      description: 'Sistema de control de inventario',
+      theme_color: "#fff",
+      icons: [
+        {
+          src: "LOGO-MR192.svg",
+          sizes: "192x192",
+          type: "image/png",
+        },
+        {
+          src: "LOGO-MR512.svg",
+          sizes: "512x512",
+          type: "image/png",
+        },
+      ]
+    }
+  },
   css: [
     "primevue/resources/themes/lara-light-blue/theme.css",
     "primeicons/primeicons.css"
   ],
   build: {
-    transpile: ["primevue"]
+    transpile: [
+      "primevue"
+    ]
   }
 })

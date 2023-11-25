@@ -47,6 +47,18 @@ export const userById = (id : string) : Promise<User | null> => {
     })
 }
 
+export const getUsersEnable = () => {
+    return prisma.user.findMany({
+        where: {
+            status: true
+        },
+        select: {
+            id: true,
+            name: true
+        }
+    })
+}
+
 export const register = (user : CreateUser) => {
     return prisma.user.create({
         data: {

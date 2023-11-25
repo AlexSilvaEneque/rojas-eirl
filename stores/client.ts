@@ -1,10 +1,11 @@
-import { Client, CreateClient } from "~/interface/client"
+import { Client, ClientEnables, CreateClient } from "~/interface/client"
 import { useGlobalUI } from "~/stores/globalUI"
 
 export const useStoreClient = defineStore('client', () => {
     
     const storeGlobalUI = useGlobalUI()
     const clients = ref<Client[]>([])
+    const clientsEnables = ref<ClientEnables[]>([])
     const client = ref<Client | null>()
     const q = ref<string>('')
 
@@ -23,6 +24,11 @@ export const useStoreClient = defineStore('client', () => {
             })
         })
     })
+
+    const loadClientsEnable = async () => {
+        const res : ClientEnables[] = await $fetch('/api/client/enables')
+        clientsEnables.value = res
+    }
 
     const loadClients = async () => {
         const res : Client[] = await $fetch('/api/client/clients')
@@ -131,6 +137,7 @@ export const useStoreClient = defineStore('client', () => {
 
     return {
         clients,
+        clientsEnables,
         client,
         q,
         isOpen,
@@ -139,6 +146,7 @@ export const useStoreClient = defineStore('client', () => {
         isOpenDelete,
         isOpenEnable,
         filteredClients,
+        loadClientsEnable,
         selectedClient,
         moreInfo,
         handlerSubmitCreate,

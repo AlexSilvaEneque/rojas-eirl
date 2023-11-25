@@ -21,3 +21,8 @@ export interface CreateClient {
     type: TypeClient
     status: boolean
 }
+
+export interface ClientEnables {
+    id: string
+    name: string
+}

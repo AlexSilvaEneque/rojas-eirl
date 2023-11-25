@@ -21,3 +21,8 @@ export interface CreateClient {
     type: TypeClient
     desType?: string
 }
+
+export interface ClientEnables {
+    id: string
+    name: string
+}

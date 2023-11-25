@@ -1,5 +1,5 @@
 import prisma from ".";
-import { CreateProduct, Product } from "../interfaces/product";
+import { CreateProduct, Product, ProductEnables } from "../interfaces/product";
 
 export const getAllProducts = () : Promise<Product[]> => {
     return prisma.product.findMany()
@@ -23,6 +23,20 @@ export const getProductById = (id: string) : Promise<Product | null> => {
                     name: true
                 }
             }
+        }
+    })
+}
+
+export const getProductEnables = () : Promise<ProductEnables[]> => {
+    return prisma.product.findMany({
+        where: {
+            status: true
+        },
+        select: {
+            id: true,
+            name: true,
+            price_sale: true,
+            stock: true
         }
     })
 }

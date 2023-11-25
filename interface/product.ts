@@ -22,3 +22,10 @@ export interface CreateProduct {
     categoryId: string
     category: string
 }
+
+export interface ProductEnables {
+    id: string
+    name: string
+    price_sale: number
+    stock: number
+}

@@ -36,13 +36,13 @@
                 <div class="grid grid-cols-2">
                     <h3 class="font-medium">Precio de compra:</h3>
                     <span>
-                        {{ store.product?.price_purchase }}
+                        {{ formatCurrency(store.product?.price_purchase) }}
                     </span>
                 </div>
                 <div class="grid grid-cols-2">
                     <h3 class="font-medium">Precio de venta:</h3>
                     <span>
-                        {{ store.product?.price_sale }}
+                        {{ formatCurrency(store.product?.price_sale) }}
                     </span>
                 </div>
                 <div class="grid grid-cols-2">

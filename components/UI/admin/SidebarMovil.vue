@@ -40,6 +40,12 @@
             to: '/users',
             click: () => changeT()
         },
+        {
+            label: 'Roles',
+            icon: 'i-heroicons-key',
+            to: '/roles',
+            click: () => changeT()
+        },
     ]
 </script>
 

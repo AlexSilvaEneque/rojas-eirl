@@ -28,6 +28,11 @@ export default function useUsers () {
         users.value = res
     }
 
+    const usersEnable = async () => {
+        const res = await $fetch('/api/user/enables')
+        console.log(res)
+    }
+
     const selectedUser = async (param: User) => {
         const res: User | null = await $fetch('/api/auth/'+param.id)
         
@@ -152,6 +157,7 @@ export default function useUsers () {
         filteredUsers,
         loadUsers,
         selectedUser,
+        usersEnable,
         moreInfo,
         handlerSubmitCreate,
         editItem,

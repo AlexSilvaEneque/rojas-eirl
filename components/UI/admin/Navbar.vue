@@ -64,11 +64,12 @@
       <div class="w-8 h-8" />
     </template>
   </ClientOnly> -->
+
             <UButton
-                icon="i-heroicons-bars-3"
                 :ui="{
                     rounded: 'rounded-full'
                 }"
+                icon="i-heroicons-bars-3"
                 color="indigo"
                 variant="ghost"
                 size="xl"
