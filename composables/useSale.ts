@@ -196,10 +196,6 @@ export default function useSale () {
         }
     })
 
-    onMounted(() => {
-        loadSales()
-    })
-
     return {
         sales,
         sale,

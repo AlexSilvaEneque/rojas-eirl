@@ -114,3 +114,46 @@ export const deleteSale = (id: string) => {
         }
     })
 }
+
+export const countSales = () => {
+    return prisma.sale.count({
+        where: {
+            status: true
+        }
+    })
+}
+
+export const totalSale = () => {
+    return prisma.sale.aggregate({
+        _sum: {
+            total: true
+        },
+        where: {
+            status: true
+        }
+    })
+}
+
+export const reportsSaleAgo = () => {
+    const current = new Date()
+    const fiveAgo = new Date()
+    fiveAgo.setMonth(fiveAgo.getMonth()-5)
+
+    return prisma.sale.groupBy({
+        by: ['date'],
+        _count: true,
+        where: {
+            AND: [
+                {
+                    date: {
+                        gte: fiveAgo,
+                        lte: current
+                    }
+                },
+                {
+                    status: true
+                }
+            ]
+        }
+    })
+}

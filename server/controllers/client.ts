@@ -74,3 +74,11 @@ export const enableClient = (client : Client) => {
         }
     })
 }
+
+export const countClients = () => {
+    return prisma.client.count({
+        where: {
+            status: true
+        }
+    })
+}

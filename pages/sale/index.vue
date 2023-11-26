@@ -9,7 +9,11 @@
 
     const store = useStoreAuth()
     const storeGlobalUI = useGlobalUI()
-    const { q, filteredSales, moreInfo, paySaleForm, deleteItem } = useSale()
+    const { q, filteredSales, moreInfo, paySaleForm, deleteItem, loadSales } = useSale()
+
+    onMounted(() => {
+        loadSales()
+    })
 
 </script>
 

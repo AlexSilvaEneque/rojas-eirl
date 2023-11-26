@@ -13,35 +13,11 @@ export default defineEventHandler(async (event: H3Event) => {
     const endFormat = `${end.split("/")[2]}-${end.split("/")[1]}-${end.split("/")[0]}`
     const obj2 = new Date(endFormat)
     const endISO = obj2.toISOString().split("T")[0] + "T23:59:59.999Z"
-
+console.log(startISO)
     const res = await reportsSale(startISO, endISO)
-
-    // const group1 = res.reduce((groups: {[key:string]: {date: string}}, sale) => {
-    //     const d = sale.date.toISOString().split('T')[0]
-
-    //     if (!groups[d]) {
-    //         groups[d] = { date: '' };
-    //     }
-        
-    //     groups[d].date = converttoDDMMYYYY(sale.date);
-
-    //     return groups;
-    // }, {})
-
-    // const group2 = res.reduce((groups: {[key:string]: {total: number }}, sale) => {
-    //     const d = sale.date.toISOString().split('T')[0]
-
-    //     if (!groups[d]) {
-    //         groups[d] = { total: 0 };
-    //     }
-        
-    //     groups[d].total += sale.total;
-
-    //     return groups;
-    // }, {})
     
     const group1 = res.reduce((groups: Array<{[key:string]: {date: string}}>, sale) => {
-        const d = sale.date.toISOString().split('T')[0]
+        const d = converttoDDMMYYYY(sale.date)
         const index = groups.findIndex(group => group[d]);
     
         if (index === -1) {
@@ -54,7 +30,7 @@ export default defineEventHandler(async (event: H3Event) => {
     }, [])
     
     const group2 = res.reduce((groups: Array<{[key:string]: {total: number}}>, sale) => {
-        const d = sale.date.toISOString().split('T')[0]
+        const d = converttoDDMMYYYY(sale.date)
         const index = groups.findIndex(group => group[d]);
     
         if (index === -1) {

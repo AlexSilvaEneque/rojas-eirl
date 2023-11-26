@@ -1,10 +1,6 @@
 <script setup lang="ts">
-    import { PieChart, LineChart } from 'vue-chart-3';
-    import { Chart, registerables } from "chart.js";
     import { DatePicker } from 'v-calendar';
     import 'v-calendar/dist/style.css';
-
-    Chart.register(...registerables)
 
     definePageMeta({
         middleware: 'auth',
@@ -108,7 +104,7 @@
                 />
             </div>
             
-            <LineChart :chartData="testData" :options="LineOptions" :height="450" />
+            <Chart type="line" :data="testData" :options="LineOptions" :height="100" />
         </UCard>
     </div>
 </template>

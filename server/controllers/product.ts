@@ -104,4 +104,42 @@ export const enableProduct = (product: Product) => {
             status: true
         }
     })
-}  
+}
+
+export const countProducts = () => {
+    return prisma.product.count({
+        where: {
+            status: true
+        }
+    })
+}
+
+export const mostSelledProducts = async () => {
+    const mostSelled = await prisma.detail.groupBy({
+        by: ['productId'],
+        _sum: {
+            quantity: true
+        },
+    })
+
+    const productDetails = await Promise.all(mostSelled.map(async (product) => {
+        const productSearch = await prisma.product.findUnique({
+            where: {
+                id: product.productId
+            },
+            select: {
+                name: true,
+                stock: true
+            }
+        })
+
+        return {
+            ...product,
+            productSearch
+        }
+    }))
+
+    const sortedProductDetails = productDetails.sort((first, next) => next._sum.quantity! -  first._sum.quantity!)
+
+    return sortedProductDetails.slice(0, 6)
+}

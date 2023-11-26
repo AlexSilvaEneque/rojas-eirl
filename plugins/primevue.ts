@@ -4,6 +4,7 @@ import Avatar from 'primevue/avatar'
 import Menu from 'primevue/menu'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
+import Chart from 'primevue/chart'
 
 export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.use(PrimeVue, {
@@ -18,4 +19,5 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.component("Menu", Menu)
     nuxtApp.vueApp.component("DataTable", DataTable)
     nuxtApp.vueApp.component("Column", Column)
+    nuxtApp.vueApp.component("Chart", Chart)
 })

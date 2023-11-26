@@ -24,8 +24,8 @@ export const formatCurrency = (param: number) => {
 }
 
 export const converttoDDMMYYYY = (isoDate: any) => {
-    const newDate = new Date(isoDate);
-    const adjustedDate = new Date(newDate.valueOf() + newDate.getTimezoneOffset() * 60 * 1000);
-    const formattedDate = format(adjustedDate, 'dd/MM/yyyy');
-    return formattedDate;
+    const newDate = new Date(isoDate)
+    const adjustedDate = new Date(newDate)
+    const formattedDate = format(adjustedDate, 'dd/MM/yyyy')
+    return formattedDate
 }
