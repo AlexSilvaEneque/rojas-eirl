@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    const { isOpenInfo, sale } = useSale()
+    const { isOpenInfo, sale, goToPrint } = useSale()
 
     const status = computed(() => sale.value?.status ? (sale.value?.statusSale === 2 ? ['Pagada', 'primary', 'pagado'] : ['Pendiente de pago', 'amber', 'a pagar']) : ['Eliminada', 'rose', ''])
 </script>
@@ -44,6 +44,17 @@
                     <span>
                         {{ sale?.user.name }}
                     </span>
+                </div>
+                <div class="grid grid-cols-2">
+                    <h3 class="font-medium">Comprobante:</h3>
+                    <UButton
+                        icon="i-heroicons-document-text"
+                        class="w-fit"
+                        variant="soft"
+                        color="blue"
+                        :disabled="sale.numberNota === ''"
+                        @click="goToPrint(sale.id)"
+                    />
                 </div>
                 <div class="grid grid-cols-2">
                     <h3 class="font-medium">Detalle de la venta</h3>

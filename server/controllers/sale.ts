@@ -33,6 +33,7 @@ export const getSalesById = (id: string) => {
             status: true,
             statusSale: true,
             paid: true,
+            numberNota: true,
             user: {
                 select: {
                     name: true
@@ -40,7 +41,9 @@ export const getSalesById = (id: string) => {
             },
             client: {
                 select: {
-                    name: true
+                    name: true,
+                    address: true,
+                    phone: true
                 }
             },
             details: {
@@ -92,14 +95,15 @@ export const reportsSale = (start: string, end: string) => {
     })
 }
 
-export const registerPaid = (id: string, mount: number, state: number) => {
+export const registerPaid = (id: string, mount: number, state: number, number: string) => {
     return prisma.sale.update({
         where: {
             id
         },
         data: {
             paid: mount,
-            statusSale: state
+            statusSale: state,
+            numberNota: number
         }
     })
 }

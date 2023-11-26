@@ -9,7 +9,7 @@
 
     const store = useStoreAuth()
     const storeGlobalUI = useGlobalUI()
-    const { q, filteredSales, moreInfo, paySaleForm, deleteItem, loadSales } = useSale()
+    const { q, filteredSales, moreInfo, paySaleForm, deleteItem, loadSales, isOpenBoleta } = useSale()
 
     onMounted(() => {
         loadSales()
@@ -24,7 +24,15 @@
         </UIAlertSuccess>
 
         <h1 class="font-extrabold text-2xl mb-3">Lista de ventas</h1>
-        <div class="flex flex-col items-end">
+        <div class="flex justify-between items-center">
+            <UButton v-if="store.user.role!.description === 'Administrador'"
+                label="N° Boleta"
+                icon="i-heroicons-pencil"
+                class="flex-none w-fit py-2"
+                color="emerald"
+                @click="isOpenBoleta = true"
+            />
+
             <UButton v-if="store.user.role!.description === 'Administrador'"
                 label="Registrar nueva venta"
                 icon="i-heroicons-plus-circle"
@@ -119,5 +127,6 @@
 
         <OthersSaleInfo />
         <OthersSaleDelete />
+        <OthersSaleBoleta />
     </div>
 </template>

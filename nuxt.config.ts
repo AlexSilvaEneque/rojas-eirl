@@ -18,6 +18,10 @@ export default defineNuxtConfig({
     jwt_secret: process.env.JWT_SECRET
   },
 
+  routeRules: {
+    '/api/**': { cors: true }
+  },
+
   modules: [
     '@pinia/nuxt',
     '@nuxt/ui',

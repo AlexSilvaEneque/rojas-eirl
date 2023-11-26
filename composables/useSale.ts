@@ -20,7 +20,7 @@ export default function useSale () {
     const isOpen = useState<boolean>(() => false)
     const isOpenInfo = useState<boolean>(() => false)
     const isOpenDelete = useState<boolean>(() => false)
-    const isOpenEnable = useState<boolean>(() => false)
+    const isOpenBoleta = useState<boolean>(() => false)
     const flag = useState<boolean>(() => false)
 
     const dataHead = useState(() => ({
@@ -134,8 +134,15 @@ export default function useSale () {
     }
 
     const registerPay = async (totalSale: number, recive: number) => {
+        // obtener el correlativo de boleta
+        const resBoleta = await $fetch('/api/config/list')
+
+        let numBoleta = resBoleta[0].value.toString()
+        numBoleta = numBoleta.padStart(6, '0')
+
         let stateSale = 0
         let valueTotal = 0
+        let numberNota = ''
         
         // primer pago
         if (totalSale > Number(recive)) {
@@ -146,12 +153,14 @@ export default function useSale () {
         if (totalSale <= Number(recive)) {
             stateSale = 2
             valueTotal = totalSale
+            numberNota = numBoleta
         }
 
         // segundo pago, obliga a que solo sean 2 pagos
         if (sale.value?.paid !== 0) {
             stateSale = 2
             valueTotal = totalSale
+            numberNota = numBoleta
         }
 
         try {
@@ -159,7 +168,8 @@ export default function useSale () {
                 method: 'PATCH',
                 body: {
                     paid: valueTotal,
-                    state: stateSale
+                    state: stateSale,
+                    numberNota
                 }
             })
             storeGlobalUI.showMsgSuccess(res.message)
@@ -190,8 +200,28 @@ export default function useSale () {
         }
     }
 
-    watch([isOpen, isOpenInfo, isOpenDelete, isOpenEnable], () => {
-        if (!isOpen.value || !isOpenInfo.value || !isOpenDelete.value || !isOpenEnable.value) {
+    const saveChangeBoleta = async (id: string, value: number) => {
+        try {
+            const res = await $fetch<{ message: string }>('/api/config/'+id, {
+                method: 'PATCH',
+                body: {
+                    value
+                }
+            })
+            isOpenBoleta.value = false
+            storeGlobalUI.showMsgSuccess(res.message)
+        } catch (error:any) {
+            storeGlobalUI.showMsgFailed(error.statusMessage)
+        }
+    }
+
+    const goToPrint = (id: string) => {
+        window.open('http://localhost:3000/rojas/'+id, '_blank')
+    }
+
+
+    watch([isOpen, isOpenInfo, isOpenDelete, isOpenBoleta], () => {
+        if (!isOpen.value || !isOpenInfo.value || !isOpenDelete.value || !isOpenBoleta.value) {
             sale.value = null
         }
     })
@@ -204,7 +234,7 @@ export default function useSale () {
         isOpen,
         isOpenInfo,
         isOpenDelete,
-        isOpenEnable,
+        isOpenBoleta,
         dataHead,
         dataProduct,
         detailProduct,
@@ -221,6 +251,8 @@ export default function useSale () {
         paySaleForm,
         registerPay,
         deleteItem,
-        handlerDelete
+        handlerDelete,
+        saveChangeBoleta,
+        goToPrint
     }
 }

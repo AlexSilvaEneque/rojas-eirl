@@ -34,8 +34,11 @@ export interface SaleById {
     },
     client: {
         name: string
+        address: string | null
+        phone: string | null
     },
     paid: number | null
+    numberNota: string | null
     details: Detail[]
 }
 
