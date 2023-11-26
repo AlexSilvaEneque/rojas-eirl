@@ -54,7 +54,13 @@
     }
 
     const submit = async () => {
-        const res = await $fetch(`/api/sale/reports?start=${format(date.value.start)}&end=${format(date.value.end)}`)
+        const res = await $fetch(`/api/sale/reports`, {
+            method: 'POST',
+            body: {
+                start: format(date.value.start),
+                end: format(date.value.end)
+            }
+        })
         
         label.value = res.group1.map((item : any) => {
             const dateObj = item[Object.keys(item)[0]];
