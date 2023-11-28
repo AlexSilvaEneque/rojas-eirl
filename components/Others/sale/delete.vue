@@ -18,7 +18,7 @@
         <UCard :ui="{ divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
             <template #header>
                 <div class="flex justify-between items-center">
-                    <h2>Eliminar producto</h2>
+                    <h2>Dar de baja venta</h2>
 
                     <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid"
                         @click="isOpenDelete = false"
@@ -27,7 +27,7 @@
             </template>
             
             <div>
-                <h3>¿Seguro de eliminar el producto?</h3>
+                <h3>¿Seguro de dar de baja esta venta?</h3>
             </div>
 
             <template #footer>
