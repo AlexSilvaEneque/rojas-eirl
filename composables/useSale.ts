@@ -217,6 +217,7 @@ export default function useSale () {
 
     const goToPrint = (id: string) => {
         window.open('https://service-pdf.vercel.app/rojas/'+id, '_blank')
+        // window.open('http://localhost:3000/rojas/'+id, '_blank')
     }
 
 

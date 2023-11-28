@@ -74,7 +74,7 @@
                                 variant="solid"
                                 @click="storeRole.moreInfo(prop.data)"
                             />
-                            <UButton v-if="store.user.role!.description === 'Administrador'"
+                            <!-- <UButton v-if="store.user.role!.description === 'Administrador'"
                                 icon="i-heroicons-pencil-square"
                                 size="sm"
                                 color="primary"
@@ -97,7 +97,7 @@
                                 square
                                 variant="solid"
                                 @click="storeRole.enableItem(prop.data)"
-                            />
+                            /> -->
                         </div>
                     </template>
                 </Column>
