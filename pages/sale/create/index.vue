@@ -9,7 +9,7 @@
         layout: 'admin'
     })
 
-    const { dataHead, dataProduct, detailProduct, disabledBtnAdd, disabledBtnSave, addCart, cancelSale, loadDataFormCreate, onSubmitCreate } = useSale()
+    const { dataHead, dataProduct, detailProduct, disabledBtnAdd, disabledBtnSave, addCart, cancelSale, loadDataFormCreate, onSubmitCreate, isOpen } = useSale()
 
     const storeClient = useStoreClient()
     const storeProduct = useStoreProduct()
@@ -51,19 +51,27 @@
                 </UFormGroup>
             </div>
             <div class="col-span-4 mb-2">
-                <UFormGroup label="Cliente" name="seller">
-                    <USelectMenu
-                        class="w-full"
-                        searchable
-                        searchable-placeholder="Busca un cliente..."
-                        placeholder="Selecciona un cliente"
-                        :options="storeClient.clientsEnables"
-                        value-attribute="name"
-                        option-attribute="name"
-                        v-model="dataHead.client"
-                        color="indigo"
+                <div class="flex w-full gap-x-1 items-end">
+                    <UFormGroup label="Cliente" name="seller" class="w-[90%]">
+                        <USelectMenu
+                            class="w-full"
+                            searchable
+                            searchable-placeholder="Busca un cliente..."
+                            placeholder="Selecciona un cliente"
+                            :options="storeClient.clientsEnables"
+                            value-attribute="name"
+                            option-attribute="name"
+                            v-model="dataHead.client"
+                            color="indigo"
+                        />
+                    </UFormGroup>
+                    <UButton
+                        class="inline"
+                        icon="i-heroicons-user-plus"
+                        color="teal"
+                        @click="isOpen = true"
                     />
-                </UFormGroup>
+                </div>
             </div>
             <div class="col-span-4 mb-2">
                 <UFormGroup label="Producto" name="userId">
@@ -146,5 +154,6 @@
         </div>
 
         <OthersSaleSalesCart />
+        <OthersClientCreate />
     </div>
 </template>

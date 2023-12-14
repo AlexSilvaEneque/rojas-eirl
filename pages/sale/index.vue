@@ -93,7 +93,7 @@
                                 />
                             </UTooltip>
 
-                            <template v-if="prop.data.statusSale !== 2 && store.user.role!.description === 'Administrador'">
+                            <template v-if="prop.data.statusSale !== 2">
                                 <UTooltip text="Realizar pago">
                                     <UButton
                                         icon="i-heroicons-clipboard-document-check"
@@ -106,7 +106,7 @@
                                 </UTooltip>
                             </template>
 
-                            <template v-if="prop.data.status && store.user.role!.description === 'Administrador'">
+                            <!-- <template v-if="prop.data.status && store.user.role!.description === 'Administrador'">
                                 <UTooltip text="Eliminar">
                                     <UButton
                                         icon="i-heroicons-trash"
@@ -117,7 +117,7 @@
                                         @click="deleteItem(prop.data)"
                                     />
                                 </UTooltip>
-                            </template>
+                            </template> -->
                         </div>
                     </template>
                 </Column>

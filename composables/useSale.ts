@@ -221,9 +221,13 @@ export default function useSale () {
     }
 
 
-    watch([isOpen, isOpenInfo, isOpenDelete, isOpenBoleta], () => {
-        if (!isOpen.value || !isOpenInfo.value || !isOpenDelete.value || !isOpenBoleta.value) {
+    watch([isOpen, isOpenInfo, isOpenDelete, isOpenBoleta], async () => {
+        if (!isOpenInfo.value || !isOpenDelete.value || !isOpenBoleta.value) {
             sale.value = null
+        }
+
+        if (!isOpen.value) {
+            await storeClient.loadClientsEnable()
         }
     })
 
