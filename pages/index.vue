@@ -3,8 +3,8 @@
   import type { IFLogin } from '../interface/index';
 
   const state : Ref<IFLogin> = ref({
-    email: '',
-    password: ''
+    email: 'admin@mail.com',
+    password: '123456'
   })
   const loading = ref<boolean>(false)
 
